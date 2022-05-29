@@ -43,7 +43,7 @@
         </javaTypeResolver>
 
         <!-- 生成实体类地址 -->
-        <javaModelGenerator targetPackage="com.fhypayaso.tittytainment.pojo.entity" targetProject="${project}">
+        <javaModelGenerator targetPackage="com.ck.tinnydouban.pojo.entity" targetProject="${project}">
             <property name="enableSubPackages" value="false" />
             <property name="trimStrings" value="true" />
         </javaModelGenerator>
@@ -52,7 +52,7 @@
             <property name="enableSubPackages" value="false" />
         </sqlMapGenerator>
         <!-- 生成mapxml对应client，也就是接口dao -->
-        <javaClientGenerator targetPackage="com.fhypayaso.tittytainment.dao" targetProject="${project}"
+        <javaClientGenerator targetPackage="com.ck.tinnydouban.dao" targetProject="${project}"
             type="XMLMAPPER">
             <property name="enableSubPackages" value="false" />
         </javaClientGenerator>

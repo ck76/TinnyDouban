@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="AppConfigMapper">
+  <resultMap id="BaseResultMap" type="AppConfig">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="main_version_code" jdbcType="INTEGER" property="mainVersionCode" />
+    <result column="sub_version_code" jdbcType="INTEGER" property="subVersionCode" />
+    <result column="gray_version_code" jdbcType="INTEGER" property="grayVersionCode" />
+    <result column="version_code" jdbcType="VARCHAR" property="versionCode" />
+    <result column="resource_url" jdbcType="VARCHAR" property="resourceUrl" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+    <result column="update_info" jdbcType="LONGVARCHAR" property="updateInfo" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ttmt_app_config
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="AppConfig">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ttmt_app_config (main_version_code, sub_version_code,
+      gray_version_code, version_code, resource_url,
+      created_time, updated_time, update_info
+      )
+    values (#{mainVersionCode,jdbcType=INTEGER}, #{subVersionCode,jdbcType=INTEGER},
+      #{grayVersionCode,jdbcType=INTEGER}, #{versionCode,jdbcType=VARCHAR}, #{resourceUrl,jdbcType=VARCHAR},
+      #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP}, #{updateInfo,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="AppConfig">
+    update ttmt_app_config
+    set main_version_code = #{mainVersionCode,jdbcType=INTEGER},
+      sub_version_code = #{subVersionCode,jdbcType=INTEGER},
+      gray_version_code = #{grayVersionCode,jdbcType=INTEGER},
+      version_code = #{versionCode,jdbcType=VARCHAR},
+      resource_url = #{resourceUrl,jdbcType=VARCHAR},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      update_info = #{updateInfo,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select id, main_version_code, sub_version_code, gray_version_code, version_code,
+    resource_url, created_time, updated_time, update_info
+    from ttmt_app_config
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByVersion" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id, main_version_code, sub_version_code, gray_version_code, version_code,
+           resource_url, created_time, updated_time, update_info
+    from ttmt_app_config
+    where version_code = #{versionCode,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, main_version_code, sub_version_code, gray_version_code, version_code,
+    resource_url, created_time, updated_time, update_info
+    from ttmt_app_config
+  </select>
+</mapper>

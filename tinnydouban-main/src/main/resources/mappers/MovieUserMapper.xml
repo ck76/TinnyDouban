@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MovieUserMapper">
+    <resultMap id="BaseResultMap" type="com.ck.tinnydouban.pojo.entity.MovieUser">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="movie_id" jdbcType="BIGINT" property="movieId"/>
+        <result column="movie_douban_id" jdbcType="BIGINT" property="movieDoubanId"/>
+        <result column="wanna_see" jdbcType="BIT" property="wannaSee"/>
+        <result column="have_seen" jdbcType="BIT" property="haveSeen"/>
+        <result column="score" jdbcType="DOUBLE" property="score"/>
+        <result column="wanna_see_time" jdbcType="TIMESTAMP" property="wannaSeeTime"/>
+        <result column="have_seen_time" jdbcType="TIMESTAMP" property="haveSeenTime"/>
+        <result column="score_time" jdbcType="TIMESTAMP" property="scoreTime"/>
+        <result column="created_time" jdbcType="TIMESTAMP" property="createdTime"/>
+        <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime"/>
+    </resultMap>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from ttmt_movie_user
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.ck.tinnydouban.pojo.entity.MovieUser">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into ttmt_movie_user (user_id, movie_id, movie_douban_id,
+        wanna_see, have_seen, score, wanna_see_time,
+        have_seen_time, score_time, created_time,
+        updated_time)
+        values (#{userId,jdbcType=BIGINT}, #{movieId,jdbcType=BIGINT}, #{movieDoubanId,jdbcType=BIGINT},
+        #{wannaSee,jdbcType=BIT}, #{haveSeen,jdbcType=BIT}, #{score,jdbcType=DOUBLE},
+        #{wannaSeeTime,jdbcType=TIMESTAMP},
+        #{haveSeenTime,jdbcType=TIMESTAMP}, #{scoreTime,jdbcType=TIMESTAMP}, #{createdTime,jdbcType=TIMESTAMP},
+        #{updatedTime,jdbcType=TIMESTAMP})
+    </insert>
+    <update id="updateByPrimaryKey" parameterType="com.ck.tinnydouban.pojo.entity.MovieUser">
+        update ttmt_movie_user
+        set user_id         = #{userId,jdbcType=BIGINT},
+            movie_id        = #{movieId,jdbcType=BIGINT},
+            movie_douban_id = #{movieDoubanId,jdbcType=BIGINT},
+            wanna_see       = #{wannaSee,jdbcType=BIT},
+            have_seen       = #{haveSeen,jdbcType=BIT},
+            score           = #{score,jdbcType=DOUBLE},
+            wanna_see_time  = #{wannaSeeTime,jdbcType=TIMESTAMP},
+            have_seen_time  = #{haveSeenTime,jdbcType=TIMESTAMP},
+            score_time      = #{scoreTime,jdbcType=TIMESTAMP},
+            created_time    = #{createdTime,jdbcType=TIMESTAMP},
+            updated_time    = #{updatedTime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select id,
+               user_id,
+               movie_id,
+               movie_douban_id,
+               wanna_see,
+               have_seen,
+               score,
+               wanna_see_time,
+               have_seen_time,
+               score_time,
+               created_time,
+               updated_time
+        from ttmt_movie_user
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByUserMovie" parameterType="map" resultMap="BaseResultMap">
+        select id,
+               user_id,
+               movie_id,
+               movie_douban_id,
+               wanna_see,
+               have_seen,
+               score,
+               wanna_see_time,
+               have_seen_time,
+               score_time,
+               created_time,
+               updated_time
+        from ttmt_movie_user
+        where user_id = #{uid,jdbcType=BIGINT}
+          and movie_id = #{mid,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectAllWannaSeeByUid" resultMap="BaseResultMap">
+        select id,
+               user_id,
+               movie_id,
+               movie_douban_id,
+               wanna_see,
+               have_seen,
+               score,
+               wanna_see_time,
+               have_seen_time,
+               score_time,
+               created_time,
+               updated_time
+        from ttmt_movie_user
+        where user_id = #{uid,jdbcType=BIGINT}
+          and wanna_see = 1
+    </select>
+
+    <select id="selectAllHaveSeenByUid" resultMap="BaseResultMap">
+        select id,
+               user_id,
+               movie_id,
+               movie_douban_id,
+               wanna_see,
+               have_seen,
+               score,
+               wanna_see_time,
+               have_seen_time,
+               score_time,
+               created_time,
+               updated_time
+        from ttmt_movie_user
+        where user_id = #{uid,jdbcType=BIGINT}
+          and have_seen = 1
+    </select>
+
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select id,
+               user_id,
+               movie_id,
+               movie_douban_id,
+               wanna_see,
+               have_seen,
+               score,
+               wanna_see_time,
+               have_seen_time,
+               score_time,
+               created_time,
+               updated_time
+        from ttmt_movie_user
+    </select>
+</mapper>

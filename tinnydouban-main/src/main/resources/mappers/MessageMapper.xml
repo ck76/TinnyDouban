@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MessageMapper">
+  <resultMap id="BaseResultMap" type="Message">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="type_id" jdbcType="BIGINT" property="typeId" />
+    <result column="from_user_id" jdbcType="BIGINT" property="fromUserId" />
+    <result column="send_user_id" jdbcType="BIGINT" property="sendUserId" />
+    <result column="has_read" jdbcType="BIT" property="hasRead" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+    <result column="message" jdbcType="LONGVARCHAR" property="message" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ttmt_message
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="Message">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ttmt_message (`type`, type_id, from_user_id,send_user_id,
+      has_read, created_time, updated_time,
+      message)
+    values (#{type,jdbcType=INTEGER}, #{typeId,jdbcType=BIGINT}, #{fromUserId,jdbcType=BIGINT}, #{sendUserId,jdbcType=BIGINT},
+      #{hasRead,jdbcType=BIT}, #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP},
+      #{message,jdbcType=LONGVARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="Message">
+    update ttmt_message
+    set `type` = #{type,jdbcType=INTEGER},
+      type_id = #{typeId,jdbcType=BIGINT},
+      from_user_id = #{fromUserId,jdbcType=BIGINT},
+      send_user_id = #{sendUserId,jdbcType=BIGINT},
+      has_read = #{hasRead,jdbcType=BIT},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      message = #{message,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select id, `type`, type_id, from_user_id, send_user_id, has_read, created_time, updated_time, message
+    from ttmt_message
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, `type`, type_id, from_user_id, send_user_id, has_read, created_time, updated_time, message
+    from ttmt_message
+  </select>
+
+  <select id="selectTypeAndUser" parameterType="map" resultMap="BaseResultMap">
+    select id, `type`, type_id, from_user_id, send_user_id, has_read, created_time, updated_time, message
+    from ttmt_message
+    where type = #{type_id,jdbcType=INTEGER}
+    and send_user_id = #{uid,jdbcType=BIGINT}
+  </select>
+
+
+  <select id="selectByType" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, `type`, type_id, from_user_id, send_user_id, has_read, created_time, updated_time, message
+    from ttmt_message
+    where type = #{typeId,jdbcType=INTEGER}
+  </select>
+
+
+
+</mapper>

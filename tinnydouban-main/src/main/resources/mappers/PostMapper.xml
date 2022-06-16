@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="PostMapper">
+  <resultMap id="BaseResultMap" type="Post">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="topic_id" jdbcType="BIGINT" property="topicId" />
+    <result column="post_type" jdbcType="BIT" property="postType" />
+    <result column="movie_id" jdbcType="BIGINT" property="movieId" />
+    <result column="create_user_id" jdbcType="BIGINT" property="createUserId" />
+    <result column="like_num" jdbcType="BIGINT" property="likeNum" />
+    <result column="comment_num" jdbcType="BIGINT" property="commentNum" />
+    <result column="last_comment_time" jdbcType="TIMESTAMP" property="lastCommentTime" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ttmt_post
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="deleteAllPostByTopic" parameterType="java.lang.Long">
+    delete from ttmt_post
+    where topic_id = #{topicId,jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insert" parameterType="Post">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ttmt_post (title, topic_id, post_type,
+      movie_id, create_user_id, like_num,
+      comment_num, last_comment_time, created_time,
+      updated_time, content)
+    values (#{title,jdbcType=VARCHAR}, #{topicId,jdbcType=BIGINT}, #{postType,jdbcType=BIT},
+      #{movieId,jdbcType=BIGINT}, #{createUserId,jdbcType=BIGINT}, #{likeNum,jdbcType=BIGINT},
+      #{commentNum,jdbcType=BIGINT}, #{lastCommentTime,jdbcType=TIMESTAMP}, #{createdTime,jdbcType=TIMESTAMP},
+      #{updatedTime,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="Post">
+    update ttmt_post
+    set title = #{title,jdbcType=VARCHAR},
+      topic_id = #{topicId,jdbcType=BIGINT},
+      post_type = #{postType,jdbcType=BIT},
+      movie_id = #{movieId,jdbcType=BIGINT},
+      create_user_id = #{createUserId,jdbcType=BIGINT},
+      like_num = #{likeNum,jdbcType=BIGINT},
+      comment_num = #{commentNum,jdbcType=BIGINT},
+      last_comment_time = #{lastCommentTime,jdbcType=TIMESTAMP},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select id, title, topic_id, post_type, movie_id, create_user_id, like_num, comment_num,
+    last_comment_time, created_time, updated_time, content
+    from ttmt_post
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, title, topic_id, post_type, movie_id, create_user_id, like_num, comment_num,
+    last_comment_time, created_time, updated_time, content
+    from ttmt_post
+  </select>
+
+  <select id="selectByTopic" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select id, title, topic_id, post_type, movie_id, create_user_id, like_num, comment_num,
+           last_comment_time, created_time, updated_time, content
+    from ttmt_post
+    where topic_id = #{topicId,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectNum" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, title, topic_id, post_type, movie_id, create_user_id, like_num, comment_num,
+           last_comment_time, created_time, updated_time, content
+    from ttmt_post
+    limit #{num}
+  </select>
+
+</mapper>

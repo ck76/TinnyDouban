@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="FilmmakerProfessionMapper">
+  <resultMap id="BaseResultMap" type="FilmmakerProfession">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="filmmaker_id" jdbcType="BIGINT" property="filmmakerId" />
+    <result column="filmmaker_douban_id" jdbcType="BIGINT" property="filmmakerDoubanId" />
+    <result column="profession_id" jdbcType="BIGINT" property="professionId" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ttmt_filmmaker_profession
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="deleteAll">
+    delete from ttmt_filmmaker_profession
+  </delete>
+
+  <insert id="insert" parameterType="FilmmakerProfession">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ttmt_filmmaker_profession (filmmaker_id, filmmaker_douban_id, profession_id,
+      created_time, updated_time)
+    values (#{filmmakerId,jdbcType=BIGINT}, #{filmmakerDoubanId,jdbcType=BIGINT}, #{professionId,jdbcType=BIGINT},
+      #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="FilmmakerProfession">
+    update ttmt_filmmaker_profession
+    set filmmaker_id = #{filmmakerId,jdbcType=BIGINT},
+      filmmaker_douban_id = #{filmmakerDoubanId,jdbcType=BIGINT},
+      profession_id = #{professionId,jdbcType=BIGINT},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select id, filmmaker_id, filmmaker_douban_id, profession_id, created_time, updated_time
+    from ttmt_filmmaker_profession
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, filmmaker_id, filmmaker_douban_id, profession_id, created_time, updated_time
+    from ttmt_filmmaker_profession
+  </select>
+</mapper>

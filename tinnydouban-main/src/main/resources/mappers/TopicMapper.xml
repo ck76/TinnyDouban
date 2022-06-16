@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="TopicMapper">
+  <resultMap id="BaseResultMap" type="Topic">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="topic_type" jdbcType="INTEGER" property="topicType" />
+    <result column="movie_id" jdbcType="BIGINT" property="movieId" />
+    <result column="create_user_id" jdbcType="BIGINT" property="createUserId" />
+    <result column="post_num" jdbcType="BIGINT" property="postNum" />
+    <result column="user_num" jdbcType="BIGINT" property="userNum" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+    <result column="topic_abstract" jdbcType="LONGVARCHAR" property="topicAbstract" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ttmt_topic
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="Topic">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ttmt_topic (`name`, topic_type, movie_id,
+      create_user_id, post_num, user_num,
+      created_time, updated_time, topic_abstract
+      )
+    values (#{name,jdbcType=VARCHAR}, #{topicType,jdbcType=INTEGER}, #{movieId,jdbcType=BIGINT},
+      #{createUserId,jdbcType=BIGINT}, #{postNum,jdbcType=BIGINT}, #{userNum,jdbcType=BIGINT},
+      #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP}, #{topicAbstract,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="Topic">
+    update ttmt_topic
+    set `name` = #{name,jdbcType=VARCHAR},
+      topic_type = #{topicType,jdbcType=INTEGER},
+      movie_id = #{movieId,jdbcType=BIGINT},
+      create_user_id = #{createUserId,jdbcType=BIGINT},
+      post_num = #{postNum,jdbcType=BIGINT},
+      user_num = #{userNum,jdbcType=BIGINT},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      topic_abstract = #{topicAbstract,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select id, `name`, topic_type, movie_id, create_user_id, post_num, user_num, created_time,
+    updated_time, topic_abstract
+    from ttmt_topic
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByMovie" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select id, `name`, topic_type, movie_id, create_user_id, post_num, user_num, created_time,
+           updated_time, topic_abstract
+    from ttmt_topic
+    where movie_id = #{movieId,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, `name`, topic_type, movie_id, create_user_id, post_num, user_num, created_time,
+    updated_time, topic_abstract
+    from ttmt_topic
+  </select>
+
+</mapper>

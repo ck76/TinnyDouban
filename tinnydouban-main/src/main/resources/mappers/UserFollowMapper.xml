@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="UserFollowMapper">
+  <resultMap id="BaseResultMap" type="UserFollow">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="follow_user_id" jdbcType="BIGINT" property="followUserId" />
+    <result column="follow" jdbcType="BIT" property="follow" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ttmt_user_follow
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="UserFollow">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ttmt_user_follow (user_id, follow_user_id, follow,
+      created_time, updated_time)
+    values (#{userId,jdbcType=BIGINT}, #{followUserId,jdbcType=BIGINT}, #{follow,jdbcType=BIT},
+      #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="UserFollow">
+    update ttmt_user_follow
+    set user_id = #{userId,jdbcType=BIGINT},
+      follow_user_id = #{followUserId,jdbcType=BIGINT},
+      follow = #{follow,jdbcType=BIT},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select id, user_id, follow_user_id, follow, created_time, updated_time
+    from ttmt_user_follow
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, user_id, follow_user_id, follow, created_time, updated_time
+    from ttmt_user_follow
+  </select>
+
+
+  <select id="selectByUids" parameterType="map" resultMap="BaseResultMap">
+    select id, user_id, follow_user_id, follow, created_time, updated_time
+    from ttmt_user_follow
+    where user_id = #{uid,jdbcType=BIGINT}
+    and follow_user_id = #{followUid,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectFollowingList" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select id, user_id, follow_user_id, follow, created_time, updated_time
+    from ttmt_user_follow
+    where user_id = #{userId,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectFollowedList" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select id, user_id, follow_user_id, follow, created_time, updated_time
+    from ttmt_user_follow
+    where follow_user_id = #{followUserId,jdbcType=BIGINT}
+  </select>
+
+
+
+
+</mapper>

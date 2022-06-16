@@ -16,6 +16,12 @@ public class AdminRoleController {
     @Resource
     private UserRoleService userRoleService;
 
+    /**
+     * 给用户关联一个角色
+     * @param userRoleVO
+     * @return
+     * @throws ApiException
+     */
     @PostMapping("user/addRole")
     @ApiOperation(value = "插入用户-角色关系")
     public CommonResult insert(@RequestBody UserRoleVO userRoleVO) throws ApiException {

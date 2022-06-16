@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MovieCategoryMapper">
+  <resultMap id="BaseResultMap" type="MovieCategory">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="movie_id" jdbcType="BIGINT" property="movieId" />
+    <result column="movie_douban_id" jdbcType="BIGINT" property="movieDoubanId" />
+    <result column="category_id" jdbcType="BIGINT" property="categoryId" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ttmt_movie_category
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="deleteAll">
+    delete from ttmt_movie_category
+  </delete>
+
+  <insert id="insert" parameterType="MovieCategory">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ttmt_movie_category (movie_id, movie_douban_id, category_id,
+      created_time, updated_time)
+    values (#{movieId,jdbcType=BIGINT}, #{movieDoubanId,jdbcType=BIGINT}, #{categoryId,jdbcType=BIGINT},
+      #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="MovieCategory">
+    update ttmt_movie_category
+    set movie_id = #{movieId,jdbcType=BIGINT},
+      movie_douban_id = #{movieDoubanId,jdbcType=BIGINT},
+      category_id = #{categoryId,jdbcType=BIGINT},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select id, movie_id, movie_douban_id, category_id, created_time, updated_time
+    from ttmt_movie_category
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByMovie" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select id, movie_id, movie_douban_id, category_id, created_time, updated_time
+    from ttmt_movie_category
+    where movie_id = #{movieId,jdbcType=BIGINT}
+  </select>
+
+
+  <select id="selectByCategory" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select id, movie_id, movie_douban_id, category_id, created_time, updated_time
+    from ttmt_movie_category
+    where category_id = #{categoryId,jdbcType=BIGINT}
+  </select>
+
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, movie_id, movie_douban_id, category_id, created_time, updated_time
+    from ttmt_movie_category
+  </select>
+</mapper>

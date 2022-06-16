@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ReplyMapper">
+  <resultMap id="BaseResultMap" type="Reply">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="reply_type" jdbcType="INTEGER" property="replyType" />
+    <result column="comment_id" jdbcType="BIGINT" property="commentId" />
+    <result column="reply_id" jdbcType="BIGINT" property="replyId" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="reply_user_id" jdbcType="BIGINT" property="replyUserId" />
+    <result column="status" jdbcType="BIT" property="status" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ttmt_reply
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="deleteByComment" parameterType="java.lang.Long">
+    delete from ttmt_reply
+    where comment_id = #{commentId,jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insert" parameterType="Reply">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ttmt_reply (reply_type, comment_id, reply_id,
+      user_id, reply_user_id, `status`,
+      created_time, updated_time, content
+      )
+    values (#{replyType,jdbcType=INTEGER}, #{commentId,jdbcType=BIGINT}, #{replyId,jdbcType=BIGINT},
+      #{userId,jdbcType=BIGINT}, #{replyUserId,jdbcType=BIGINT}, #{status,jdbcType=BIT},
+      #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="Reply">
+    update ttmt_reply
+    set reply_type = #{replyType,jdbcType=INTEGER},
+      comment_id = #{commentId,jdbcType=BIGINT},
+      reply_id = #{replyId,jdbcType=BIGINT},
+      user_id = #{userId,jdbcType=BIGINT},
+      reply_user_id = #{replyUserId,jdbcType=BIGINT},
+      `status` = #{status,jdbcType=BIT},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select id, reply_type, comment_id, reply_id, user_id, reply_user_id, `status`, created_time,
+    updated_time, content
+    from ttmt_reply
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByComment" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select id, reply_type, comment_id, reply_id, user_id, reply_user_id, `status`, created_time,
+           updated_time, content
+    from ttmt_reply
+    where comment_id = #{commentId,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, reply_type, comment_id, reply_id, user_id, reply_user_id, `status`, created_time,
+    updated_time, content
+    from ttmt_reply
+  </select>
+</mapper>

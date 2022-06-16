@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="FilmmakerMapper">
+  <resultMap id="BaseResultMap" type="Filmmaker">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="douban_id" jdbcType="BIGINT" property="doubanId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="name_en" jdbcType="VARCHAR" property="nameEn" />
+    <result column="name_zh" jdbcType="VARCHAR" property="nameZh" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="birth" jdbcType="TIMESTAMP" property="birth" />
+    <result column="birth_place" jdbcType="VARCHAR" property="birthPlace" />
+    <result column="constellation" jdbcType="VARCHAR" property="constellation" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+    <result column="biography" jdbcType="LONGVARCHAR" property="biography" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ttmt_filmmaker
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="deleteAll">
+    delete from ttmt_filmmaker
+  </delete>
+
+
+
+  <insert id="insert" parameterType="Filmmaker">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ttmt_filmmaker (douban_id, `name`, name_en,
+      name_zh, sex, birth,
+      birth_place, constellation, created_time,
+      updated_time, biography)
+    values (#{doubanId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{nameEn,jdbcType=VARCHAR},
+      #{nameZh,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{birth,jdbcType=TIMESTAMP},
+      #{birthPlace,jdbcType=VARCHAR}, #{constellation,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP},
+      #{updatedTime,jdbcType=TIMESTAMP}, #{biography,jdbcType=LONGVARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="Filmmaker">
+    update ttmt_filmmaker
+    set douban_id = #{doubanId,jdbcType=BIGINT},
+      `name` = #{name,jdbcType=VARCHAR},
+      name_en = #{nameEn,jdbcType=VARCHAR},
+      name_zh = #{nameZh,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      birth = #{birth,jdbcType=TIMESTAMP},
+      birth_place = #{birthPlace,jdbcType=VARCHAR},
+      constellation = #{constellation,jdbcType=VARCHAR},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      biography = #{biography,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select id, douban_id, `name`, name_en, name_zh, sex, birth, birth_place, constellation,
+    created_time, updated_time, biography
+    from ttmt_filmmaker
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByDoubanId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select id, douban_id, `name`, name_en, name_zh, sex, birth, birth_place, constellation,
+           created_time, updated_time, biography
+    from ttmt_filmmaker
+    where douban_id = #{dbId,jdbcType=BIGINT}
+  </select>
+
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, douban_id, `name`, name_en, name_zh, sex, birth, birth_place, constellation,
+    created_time, updated_time, biography
+    from ttmt_filmmaker
+  </select>
+</mapper>

@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 @Service
 public class AppConfigServiceImpl implements AppConfigService {
 
+    //存储所有的APP版本以及配置信息
     @Resource
     private AppConfigMapper appConfigMapper;
 

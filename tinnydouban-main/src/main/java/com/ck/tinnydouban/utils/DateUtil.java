@@ -31,8 +31,6 @@ public class DateUtil {
         try {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat(formatType);//注意月份是MM
             Date date = simpleDateFormat.parse(formatStr);
-//            SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
 
             return date;
         } catch (ParseException e) {

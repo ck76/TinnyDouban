@@ -3,6 +3,9 @@ package com.ck.tinnydouban.pojo.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * 消息实体
+ */
 public class Message implements Serializable {
     private Long id;
 

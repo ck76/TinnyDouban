@@ -20,7 +20,10 @@ import javax.servlet.http.HttpServletResponse;
 public class UserController {
 
 
-    @Value("${jwt.tokenHeader}")
+    @Value("{\n" +
+            "  \"alg\": \"HS256\",\n" +
+            "  \"typ\": \"JWT\"\n" +
+            "}")
     private String tokenHeader;
 
     @Resource

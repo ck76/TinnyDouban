@@ -28,7 +28,10 @@ import java.io.IOException;
 @Slf4j
 public class JwtTokenFilter extends UsernamePasswordAuthenticationFilter {
 
-    @Value("${jwt.tokenHeader}")
+    @Value("{\n" +
+            "  \"alg\": \"HS256\",\n" +
+            "  \"typ\": \"JWT\"\n" +
+            "}")
     private String tokenHeader;
 
     @Resource

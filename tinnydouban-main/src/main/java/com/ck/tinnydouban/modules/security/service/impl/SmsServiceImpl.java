@@ -15,11 +15,11 @@ import javax.annotation.Resource;
 public class SmsServiceImpl implements SmsService {
 
 
-    @Value("${sms.expiration}")
-    private Long expiration;
-
-    @Resource
-    private SmsUtil smsUtil;
+//    @Value("${sms.expiration}")
+//    private Long expiration;
+//
+//    @Resource
+//    private SmsUtil smsUtil;
 
 
     @Resource
@@ -28,14 +28,15 @@ public class SmsServiceImpl implements SmsService {
 
     @Override
     public Boolean sendMessage(String phone) throws TencentCloudSDKException, ApiException {
-
-        // 生成验证码
-        String captcha = smsUtil.generateCaptchaCode();
-        // 验证码存入redis, 并设置验证码有效时间
-        redisUtil.setStrValue(phone, captcha);
-        redisUtil.setMinuteExpire(phone, expiration);
-        // 发送验证码
-        return smsUtil.sendMessage(phone, captcha);
+//
+//        // 生成验证码
+//        String captcha = smsUtil.generateCaptchaCode();
+//        // 验证码存入redis, 并设置验证码有效时间
+//        redisUtil.setStrValue(phone, captcha);
+//        redisUtil.setMinuteExpire(phone, expiration);
+//        // 发送验证码
+//        return smsUtil.sendMessage(phone, captcha);
+        return true;
     }
 
 

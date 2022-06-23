@@ -19,26 +19,26 @@ import java.util.Random;
 @Slf4j
 public class SmsUtil {
 
-    @Value("${sms.templateId}")
-    private String templateId;
-
-    @Value("${sms.sdkAppId}")
-    private String sdkAppId;
-
-    @Value("${sms.sign}")
-    private String sign;
-
-    @Value("${sms.regionCode}")
-    private String regionCode;
-
-    @Value("${sms.secretId}")
-    private String secretId;
-
-    @Value("${sms.secretKey}")
-    private String secretKey;
-
-    @Value("${sms.expiration}")
-    private Long expiration;
+//    @Value("${sms.templateId}")
+//    private String templateId;
+//
+//    @Value("${sms.sdkAppId}")
+//    private String sdkAppId;
+//
+//    @Value("${sms.sign}")
+//    private String sign;
+//
+//    @Value("${sms.regionCode}")
+//    private String regionCode;
+//
+//    @Value("${sms.secretId}")
+//    private String secretId;
+//
+//    @Value("${sms.secretKey}")
+//    private String secretKey;
+//
+//    @Value("${sms.expiration}")
+//    private Long expiration;
 
 
     /**
@@ -51,35 +51,35 @@ public class SmsUtil {
      */
     public Boolean sendMessage(String phone, String captcha) throws TencentCloudSDKException, ApiException {
 
-
-        Credential cred = new Credential(secretId, secretKey);
-        HttpProfile httpProfile = new HttpProfile();
-        httpProfile.setEndpoint("sms.tencentcloudapi.com");
-
-        ClientProfile clientProfile = new ClientProfile();
-        clientProfile.setHttpProfile(httpProfile);
-
-        SmsClient client = new SmsClient(cred, "", clientProfile);
-        SendSmsRequest req = new SendSmsRequest();
-
-        String phoneNumber = regionCode + phone;
-        String[] phoneNumberSet = {phoneNumber};
-        req.setPhoneNumberSet(phoneNumberSet);
-
-        String[] templateParamSet1 = {captcha, String.valueOf(expiration)};
-        req.setTemplateParamSet(templateParamSet1);
-
-        req.setTemplateID(templateId);
-        req.setSmsSdkAppid(sdkAppId);
-        req.setSign(sign);
-
-        SendSmsResponse resp = client.SendSms(req);
-//        log.info(SendSmsResponse.toJsonString(resp));
-
-
-        SendStatus[] statusSet = resp.getSendStatusSet();
-        SendStatus status = statusSet[0];
-        ApiException.when(!"Ok".equals(status.getCode()),"验证码发送失败:" + status.getMessage());
+//
+//        Credential cred = new Credential(secretId, secretKey);
+//        HttpProfile httpProfile = new HttpProfile();
+//        httpProfile.setEndpoint("sms.tencentcloudapi.com");
+//
+//        ClientProfile clientProfile = new ClientProfile();
+//        clientProfile.setHttpProfile(httpProfile);
+//
+//        SmsClient client = new SmsClient(cred, "", clientProfile);
+//        SendSmsRequest req = new SendSmsRequest();
+//
+//        String phoneNumber = regionCode + phone;
+//        String[] phoneNumberSet = {phoneNumber};
+//        req.setPhoneNumberSet(phoneNumberSet);
+//
+//        String[] templateParamSet1 = {captcha, String.valueOf(expiration)};
+//        req.setTemplateParamSet(templateParamSet1);
+//
+//        req.setTemplateID(templateId);
+//        req.setSmsSdkAppid(sdkAppId);
+//        req.setSign(sign);
+//
+//        SendSmsResponse resp = client.SendSms(req);
+////        log.info(SendSmsResponse.toJsonString(resp));
+//
+//
+//        SendStatus[] statusSet = resp.getSendStatusSet();
+//        SendStatus status = statusSet[0];
+//        ApiException.when(!"Ok".equals(status.getCode()),"验证码发送失败:" + status.getMessage());
 
         return true;
     }

@@ -41,6 +41,18 @@ public class MovieUserServiceImpl implements MovieUserService {
     private UserService userService;
 
 
+    /**
+     * 查询当前用户与此电影的关系
+     * 是否看过
+     * 是否喜欢
+     * 是否想看
+     * 给多少评分
+     * ……
+     *
+     * @param movieId
+     * @return
+     * @throws ApiException
+     */
     MovieUser selectMovieUser(Long movieId) throws ApiException {
 
         Long uid = userService.currentUserId();

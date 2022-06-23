@@ -28,6 +28,12 @@ public class ProfessionServiceImpl implements ProfessionService {
     private FilmmakerProfessionMapper filmmakerProfessionMapper;
 
 
+    /**
+     * 插入一种职业
+     *
+     * @param professionName
+     * @return
+     */
     @Override
     public Long insert(String professionName) {
 
@@ -40,6 +46,13 @@ public class ProfessionServiceImpl implements ProfessionService {
         return profession.getId();
     }
 
+    /**
+     * 给一个演职员关联一种职业
+     *
+     * @param filmmaker
+     * @param professionId
+     * @return
+     */
     @Override
     public int insertFilmmakerProfession(Filmmaker filmmaker, Long professionId) {
 

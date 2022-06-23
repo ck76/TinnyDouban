@@ -111,6 +111,15 @@ public class MovieServiceImpl implements MovieService {
         return movieVO;
     }
 
+    /**
+     * 包裹movie
+     * 填充演职人员信息
+     *
+     * @param movie
+     * @param withDetailInfo
+     * @return
+     * @throws ApiException
+     */
     @Override
     public MovieVO wrapMovie(Movie movie, Boolean withDetailInfo) throws ApiException {
 
@@ -155,6 +164,7 @@ public class MovieServiceImpl implements MovieService {
         movieVO.setProfessions(professionVOList);
         return movieVO;
     }
+
 
 
     private ProfessionVO checkProfession(List<ProfessionVO> professionVOList, Profession profession) {
@@ -216,6 +226,14 @@ public class MovieServiceImpl implements MovieService {
     }
 
 
+    /**
+     * 给电影插入演职人员信息
+     *
+     * @param movie
+     * @param filmmaker
+     * @param profession
+     * @return
+     */
     @Override
     public int insertMovieFilmmaker(Movie movie, Filmmaker filmmaker, Profession profession) {
 
@@ -237,6 +255,9 @@ public class MovieServiceImpl implements MovieService {
         return movieFilmmakerMapper.insert(movieFilmmaker);
     }
 
+    /**
+     * 给电影删除所有演职人员信息
+     */
     @Override
     public int deleteAllMovieFilmmaker() {
         return movieFilmmakerMapper.deleteAll();
@@ -249,6 +270,15 @@ public class MovieServiceImpl implements MovieService {
     }
 
 
+    /**
+     * 根据年查询电影
+     *
+     * @param year
+     * @param offset
+     * @param count
+     * @return
+     * @throws ApiException
+     */
     @Override
     public PageInfo<MovieVO> queryMovieByYear(Integer year, Integer offset, Integer count) throws ApiException {
 
@@ -262,6 +292,14 @@ public class MovieServiceImpl implements MovieService {
         return new PageInfo<>(voList);
     }
 
+    /**
+     * 只查询有封面的，mock数据
+     *
+     * @param offset
+     * @param count
+     * @return
+     * @throws ApiException
+     */
     @Override
     public PageInfo<MovieVO> queryMovieWithCover(Integer offset, Integer count) throws ApiException {
         PageHelper.offsetPage(offset, count);

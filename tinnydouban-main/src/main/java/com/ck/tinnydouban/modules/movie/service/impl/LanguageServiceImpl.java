@@ -25,6 +25,10 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+/**
+ * 电影的一种属性，也可以根据此属性查询电影
+ */
+
 @Slf4j
 @Service
 public class LanguageServiceImpl implements LanguageService {

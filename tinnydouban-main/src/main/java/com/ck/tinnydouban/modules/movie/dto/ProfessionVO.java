@@ -9,6 +9,7 @@ import lombok.ToString;
 import java.util.ArrayList;
 import java.util.List;
 
+//电影下的全部演职人员信息
 @Data
 @ToString
 public class ProfessionVO {

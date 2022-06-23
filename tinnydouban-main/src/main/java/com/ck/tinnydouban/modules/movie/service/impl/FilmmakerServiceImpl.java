@@ -21,7 +21,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-
+/**
+ * 演员相关
+ */
 @Slf4j
 @Service
 public class FilmmakerServiceImpl implements FilmmakerService {
@@ -42,6 +44,9 @@ public class FilmmakerServiceImpl implements FilmmakerService {
     private MovieService movieService;
 
 
+    /**
+     * 插入演员
+     */
     @Override
     public int insert(Filmmaker filmmaker) {
 
@@ -55,12 +60,25 @@ public class FilmmakerServiceImpl implements FilmmakerService {
         return filmmakerMapper.deleteAll();
     }
 
+    /**
+     * 演员有演员id和豆瓣id
+     *
+     * 电影有豆瓣id，演员也有豆瓣id，不冲突，因为数据是从豆瓣爬来的
+     */
     @Override
     public Filmmaker queryByDoubanId(Long dbId) {
         return filmmakerMapper.selectByDoubanId(dbId);
     }
 
 
+    /**
+     * 根据演员id查询演员，id是本身数据库生成的id
+     *
+     * @param id
+     * @param withMovieInfo
+     * @return
+     * @throws ApiException
+     */
     @Override
     public FilmmakerVO queryById(Long id, Boolean withMovieInfo) throws ApiException {
 
@@ -70,6 +88,15 @@ public class FilmmakerServiceImpl implements FilmmakerService {
         return vo;
     }
 
+    /**
+     * 根据演员查询他出演的作品
+     *
+     * @param filmmakerId
+     * @param offset
+     * @param count
+     * @return
+     * @throws ApiException
+     */
     @Override
     public PageInfo<MovieVO> queryMoviesByFilmmaker(Long filmmakerId, Integer offset, Integer count) throws ApiException {
 
@@ -84,6 +111,7 @@ public class FilmmakerServiceImpl implements FilmmakerService {
         return new PageInfo<>(movieVOList);
     }
 
+    //如果有作品，那么把作品填充到包装类
     FilmmakerVO wrapFilmmaker(Filmmaker filmmaker, Boolean withMovieInfo) throws ApiException {
 
         if (filmmaker == null) {
@@ -97,6 +125,7 @@ public class FilmmakerServiceImpl implements FilmmakerService {
             return filmmakerVO;
         }
 
+        //如果有作品，那么把作品填充到包装类
         List<MovieFilmmaker> movieFilmmakerList = movieFilmmakerMapper.selectByFilmmaker(filmmaker.getId());
         List<MovieVO> movieVOList = new ArrayList<>();
 
@@ -127,6 +156,9 @@ public class FilmmakerServiceImpl implements FilmmakerService {
         return null;
     }
 
+    /**
+     * 演员相关
+     */
     @Override
     public List<MovieFilmmaker> queryMovieFilmmaker(Long movieId) {
         return movieFilmmakerMapper.selectByMovie(movieId);

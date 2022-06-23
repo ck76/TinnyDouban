@@ -40,6 +40,12 @@ public class CategoryServiceImpl implements CategoryService {
     private MovieService movieService;
 
 
+    /**
+     * 添加类型
+     *
+     * @param categoryName
+     * @return
+     */
     @Override
     public Long insert(String categoryName) {
 
@@ -52,6 +58,13 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryModel.getId();
     }
 
+    /**
+     * 给电影关联类型
+     *
+     * @param movie
+     * @param categoryId
+     * @return
+     */
     @Override
     public int insertMovieCategory(Movie movie, Long categoryId) {
 
@@ -75,6 +88,12 @@ public class CategoryServiceImpl implements CategoryService {
         return movieCategoryMapper.deleteAll();
     }
 
+    /**
+     * 查询电影有哪些类型
+     *
+     * @param movieId
+     * @return
+     */
     @Override
     public List<CategoryVO> queryByMovie(Long movieId) {
 
@@ -111,6 +130,11 @@ public class CategoryServiceImpl implements CategoryService {
         return 0;
     }
 
+    /**
+     * 查询所有类型
+     *
+     * @return
+     */
     @Override
     public List<CategoryVO> queryAll() {
 
@@ -127,6 +151,15 @@ public class CategoryServiceImpl implements CategoryService {
         return voList;
     }
 
+    /**
+     * 根据类型查询电影
+     *
+     * @param categoryId
+     * @param offset
+     * @param count
+     * @return
+     * @throws ApiException
+     */
     @Override
     public PageInfo<MovieVO> queryMovieByCategory(Long categoryId, Integer offset, Integer count) throws ApiException {
 

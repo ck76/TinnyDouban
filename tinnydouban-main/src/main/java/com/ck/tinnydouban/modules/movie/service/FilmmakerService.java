@@ -12,6 +12,9 @@ import com.github.pagehelper.PageInfo;
 import java.util.List;
 
 
+/**
+ * 演员相关
+ */
 public interface FilmmakerService {
 
     int insert(Filmmaker filmmaker);
